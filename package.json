@@ -23,5 +23,13 @@
   "bugs": {
     "url": "https://gitlab.com/lolPants/elite-dangerous-rich-presence/issues"
   },
-  "homepage": "https://gitlab.com/lolPants/elite-dangerous-rich-presence#README"
+  "homepage": "https://gitlab.com/lolPants/elite-dangerous-rich-presence#README",
+  "devDependencies": {
+    "eslint": "^4.13.0"
+  },
+  "dependencies": {
+    "chokidar": "^1.7.0",
+    "discord-rpc": "^3.0.0-beta.6",
+    "fs-extra": "^4.0.3"
+  }
 }
