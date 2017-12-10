@@ -1,0 +1,26 @@
+{
+  "name": "elite-dangerous-rich-presence",
+  "version": "0.1.0",
+  "description": "Discord RPC for Elite Dangerous",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "eslint src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/lolPants/elite-dangerous-rich-presence.git"
+  },
+  "keywords": [
+    "discord",
+    "rich",
+    "presence",
+    "elite",
+    "dangerous"
+  ],
+  "author": "Ja",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/lolPants/elite-dangerous-rich-presence/issues"
+  },
+  "homepage": "https://gitlab.com/lolPants/elite-dangerous-rich-presence#README"
+}
