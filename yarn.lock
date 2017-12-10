@@ -379,11 +379,11 @@ discord-rpc@^3.0.0-beta.6:
   version "12.0.0-dev"
   resolved "https://codeload.github.com/hydrabolt/discord.js/tar.gz/20689a51a1c37ff7b7edaff357621640d68bac67"
   dependencies:
-    pako "^1.0.0"
-    prism-media "^0.0.2"
-    snekfetch "^3.5.0"
+    long "^3.0.0"
+    prism-media "^0.0.1"
+    snekfetch "^3.0.0"
     tweetnacl "^1.0.0"
-    ws "^3.3.1"
+    ws "^3.0.0"
 
 doctrine@^2.0.2:
   version "2.0.2"
@@ -1553,7 +1553,7 @@ util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
 
-uuid@^3.0.0:
+uuid@^3.0.0, uuid@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
 
