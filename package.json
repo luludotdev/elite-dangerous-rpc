@@ -1,6 +1,7 @@
 {
   "name": "elite-dangerous-rich-presence",
   "version": "0.1.0",
+  "private": true,
   "description": "Discord RPC for Elite Dangerous",
   "main": "src/index.js",
   "scripts": {
@@ -17,7 +18,7 @@
     "elite",
     "dangerous"
   ],
-  "author": "Ja",
+  "author": "Jack Baron <me@jackbaron.com> (https://www.jackbaron.com)",
   "license": "ISC",
   "bugs": {
     "url": "https://gitlab.com/lolPants/elite-dangerous-rich-presence/issues"
