@@ -87,11 +87,11 @@ const getCurrentSystem = data => {
  */
 const getWingStatus = data => {
   let wingData = data
-    .filter(x => x.event === 'WingJoin' || x.event === 'WingAdd' || x.event === 'WingLeave')
+    .filter(x => ['WingJoin', 'WingAdd', 'WingLeave'].includes(x.event))
     .reverse()
   if (wingData.length === 0) return false
 
-  let first = wingData.find(x => x.event === 'WingJoin' || x.event === 'WingLeave')
+  let first = wingData.find(x => ['WingJoin', 'WingLeave'].includes(x.event))
   if (first.event === 'WingLeave') return false
 
   let count = 1
