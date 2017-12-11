@@ -12,32 +12,38 @@ DiscordRPC.register(CLIENT_ID)
 const rpc = new DiscordRPC.Client({ transport: 'ipc' })
 
 rpc.on('ready', () => {
-  let watcher = chokidar.watch(JOURNAL_PATH)
+  let watcher = chokidar.watch(JOURNAL_PATH, {
+    usePolling: true,
+  })
   watcher.on('change', async () => {
     let data = await getLatestFile(JOURNAL_PATH)
 
     let currentSystem = getCurrentSystem(data)
     let wingData = getWingStatus(data)
 
-    let details = {
-      details: currentSystem.StarSystem,
-      largeImageKey: 'ed_logo',
-      largeImageText: 'Elite Dangerous',
-      smallImageKey: `star_${currentSystem.StarClass.toLowerCase()}`,
-      smallImageText: `Star Class: ${currentSystem.StarClass}`,
-      instance: false,
-    }
+    try {
+      let details = {
+        details: currentSystem.StarSystem,
+        largeImageKey: 'ed_logo',
+        largeImageText: 'Elite Dangerous',
+        smallImageKey: `star_${currentSystem.StarClass.toLowerCase()}`,
+        smallImageText: `Star Class: ${currentSystem.StarClass}`,
+        instance: false,
+      }
 
-    if (wingData) {
-      details.state = 'In Wing'
-      details.partySize = wingData
-      details.partyMax = 4
-      details.partyId = uuid()
-    } else {
-      details.state = 'Flying Solo'
-    }
+      if (wingData) {
+        details.state = 'In Wing'
+        details.partySize = wingData
+        details.partyMax = 4
+        details.partyId = uuid()
+      } else {
+        details.state = 'Flying Solo'
+      }
 
-    rpc.setActivity(details)
+      rpc.setActivity(details)
+    } catch (err) {
+      console.error('No Data, perform a jump!')
+    }
   })
 })
 
