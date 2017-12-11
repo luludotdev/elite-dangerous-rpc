@@ -18,10 +18,11 @@ rpc.on('ready', () => {
   watcher.on('change', async () => {
     let data = await getLatestFile(JOURNAL_PATH)
 
-    let currentSystem = getCurrentSystem(data)
-    let wingData = getWingStatus(data)
-
     try {
+      let currentSystem = getCurrentSystem(data)
+      let wingData = getWingStatus(data)
+      let docked = getDockedStatus(data)
+
       let details = {
         details: currentSystem.StarSystem,
         largeImageKey: 'ed_logo',
@@ -40,6 +41,8 @@ rpc.on('ready', () => {
         details.state = 'Flying Solo'
       }
 
+      if (docked) details.details = `Docked at ${docked.StationName} (${docked.StationType})`
+
       rpc.setActivity(details)
     } catch (err) {
       console.error('No Data, perform a jump!')
@@ -52,12 +55,21 @@ rpc.login(CLIENT_ID)
 
 const getLatestFile = async dirPath => {
   let files = await fs.readdir(dirPath)
-  files = files.filter(x => x.match(/Journal\.[0-9]+\.[0-9]+\.log/))
-  let filePath = path.join(dirPath, files.pop())
-  let file = await fs.readFile(filePath, 'utf8')
-  return file.split('\n')
-    .filter(x => x.length > 0)
-    .map(JSON.parse)
+  files = files
+    .filter(x => x.match(/Journal\.[0-9]+\.[0-9]+\.log/))
+    .reverse()
+
+  let [pathLatest, pathOld] = files
+  let data = await Promise.all([
+    fs.readFile(path.join(dirPath, pathLatest), 'utf8'),
+    fs.readFile(path.join(dirPath, pathOld), 'utf8'),
+  ])
+  data = data
+    .reverse()
+    .map(file => file.split('\n')
+      .filter(x => x.length > 0)
+      .map(JSON.parse))
+  return [...data[0], ...data[1]]
 }
 
 /**
@@ -100,3 +112,36 @@ const getWingStatus = data => {
     else if (i.event === 'WingJoin') return count
   }
 }
+
+/**
+ * @typedef {Object} DockedEvent
+ * @property {string} event
+ * @property {number} DistFromStarLS
+ * @property {string} StarSystem
+ * @property {string} StationName
+ * @property {string[]} StationServices
+ * @property {string} StationType
+ * @property {string} timestamp
+ */
+
+/**
+ * Gets if ship is docked or not
+ * @param {any[]} data Journal Data
+ * @returns {DockedEvent|boolean}
+ */
+const getDockedStatus = data => {
+  let dockedData = data
+    .filter(x => ['Docked', 'Undocked'].includes(x.event))
+    .reverse()
+
+  let current = dockedData[0]
+  if (current.event === 'Undocked') return false
+  current.StationType = fixCamelCase(current.StationType)
+  return current
+}
+
+/**
+ * @param {string} str Input String
+ * @returns {string}
+ */
+const fixCamelCase = str => str.replace(/^[a-z]|[A-Z]/g, (v, i) => i === 0 ? v.toUpperCase() : ` ${v}`)
