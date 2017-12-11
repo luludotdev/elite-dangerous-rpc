@@ -2,6 +2,7 @@ const path = require('path')
 const chokidar = require('chokidar')
 const fs = require('fs-extra')
 const DiscordRPC = require('discord-rpc')
+const uuid = require('uuid/v4')
 
 const { USERPROFILE } = process.env
 const JOURNAL_PATH = path.join(USERPROFILE, '\\Saved Games\\Frontier Developments\\Elite Dangerous')
@@ -14,17 +15,29 @@ rpc.on('ready', () => {
   let watcher = chokidar.watch(JOURNAL_PATH)
   watcher.on('change', async () => {
     let data = await getLatestFile(JOURNAL_PATH)
-    let currentSystem = getCurrentSystem(data)
 
-    rpc.setActivity({
+    let currentSystem = getCurrentSystem(data)
+    let wingData = getWingStatus(data)
+
+    let details = {
       details: currentSystem.StarSystem,
-      state: 'Flying Solo',
       largeImageKey: 'ed_logo',
       largeImageText: 'Elite Dangerous',
       smallImageKey: `star_${currentSystem.StarClass.toLowerCase()}`,
       smallImageText: `Star Class: ${currentSystem.StarClass}`,
       instance: false,
-    })
+    }
+
+    if (wingData) {
+      details.state = 'In Wing'
+      details.partySize = wingData
+      details.partyMax = 4
+      details.partyId = uuid()
+    } else {
+      details.state = 'Flying Solo'
+    }
+
+    rpc.setActivity(details)
   })
 })
 
@@ -59,4 +72,25 @@ const getCurrentSystem = data => {
   let jumps = data.filter(x => x.event === 'StartJump' && x.JumpType === 'Hyperspace')
   let lastJump = [...jumps].pop()
   return lastJump
+}
+
+/**
+ * Gets current wing size (or returns false)
+ * @param {any[]} data Journal Data
+ * @returns {number|boolean}
+ */
+const getWingStatus = data => {
+  let wingData = data
+    .filter(x => x.event === 'WingJoin' || x.event === 'WingAdd' || x.event === 'WingLeave')
+    .reverse()
+  if (wingData.length === 0) return false
+
+  let first = wingData.find(x => x.event === 'WingJoin' || x.event === 'WingLeave')
+  if (first.event === 'WingLeave') return false
+
+  let count = 1
+  for (let i of wingData) {
+    if (i.event === 'WingAdd') count++
+    else if (i.event === 'WingJoin') return count
+  }
 }

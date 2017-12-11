@@ -379,11 +379,11 @@ discord-rpc@^3.0.0-beta.6:
   version "12.0.0-dev"
   resolved "https://codeload.github.com/hydrabolt/discord.js/tar.gz/20689a51a1c37ff7b7edaff357621640d68bac67"
   dependencies:
-    long "^3.0.0"
-    prism-media "^0.0.1"
-    snekfetch "^3.0.0"
+    pako "^1.0.0"
+    prism-media "^0.0.2"
+    snekfetch "^3.5.0"
     tweetnacl "^1.0.0"
-    ws "^3.0.0"
+    ws "^3.3.1"
 
 doctrine@^2.0.2:
   version "2.0.2"
