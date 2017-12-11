@@ -12,3 +12,4 @@ Built by [Jack Baron](https://www.jackbaron.com)
 ## Planned Features
 - Report current ship (with pictures)
 - Shows if you're in a crew
+- Electron Frontend
