@@ -5,7 +5,7 @@
   "description": "Discord RPC for Elite Dangerous",
   "main": "src/index.js",
   "scripts": {
-    "test": "eslint src/"
+    "test": "eslint --color src/"
   },
   "repository": {
     "type": "git",
@@ -25,12 +25,11 @@
   },
   "homepage": "https://gitlab.com/lolPants/elite-dangerous-rich-presence#README",
   "devDependencies": {
-    "eslint": "^4.13.0"
+    "eslint": "^5.7.0"
   },
   "dependencies": {
-    "chokidar": "^1.7.0",
-    "discord-rpc": "^3.0.0-beta.6",
-    "fs-extra": "^4.0.3",
-    "uuid": "^3.1.0"
+    "chokidar": "^2.0.4",
+    "discord-rpc": "^3.0.1",
+    "uuid": "^3.3.2"
   }
 }
