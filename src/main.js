@@ -19,7 +19,7 @@ const setRPC = details => {
 app.on('ready', async () => {
   const win = new BrowserWindow({
     width: 480,
-    height: 350,
+    height: isDev ? 370 : 350,
     resizable: false,
     maximizable: false,
     show: false,

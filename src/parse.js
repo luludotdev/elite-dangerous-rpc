@@ -87,10 +87,10 @@ const getHorizons = data => {
 /**
  * Gets if the player owns Horizons
  * @param {any[]} data Journal Data
- * @returns {('flying'|'touchdown'|'srv')}
+ * @returns {('flying'|'touchdown'|'srv'|'fighter')}
  */
 const getTouchdownStatus = data => {
-  const events = ['Docked', 'Undocked', 'Touchdown', 'Liftoff', 'LaunchSRV', 'DockSRV']
+  const events = ['Docked', 'Undocked', 'Touchdown', 'Liftoff', 'LaunchSRV', 'DockSRV', 'LaunchFighter', 'DockFighter']
 
   const [latest] = [...data]
     .filter(x => events.includes(x.event))
@@ -103,6 +103,8 @@ const getTouchdownStatus = data => {
   if (latest.event === 'Liftoff') return 'flying'
   if (latest.event === 'LaunchSRV') return 'srv'
   if (latest.event === 'DockSRV') return 'touchdown'
+  if (latest.event === 'LaunchFighter') return 'fighter'
+  if (latest.event === 'DockFighter') return 'flying'
 
   return 'flying'
 }

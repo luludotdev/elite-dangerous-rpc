@@ -23,11 +23,13 @@ class Watcher extends EventEmitter {
 
         let details = {
           details: docked ? `Docked at ${docked.StationName} (${docked.StationType})` : currentSystem.StarSystem,
-          state: touchdown === 'srv' ?
-            'Piloting an SRV' :
-            touchdown === 'touchdown' ?
-              'Touched Down' :
-              'Flying Solo',
+          state: touchdown === 'fighter' ?
+            'In Fighter' :
+            touchdown === 'srv' ?
+              'In SRV' :
+              touchdown === 'touchdown' ?
+                'Touched Down' :
+                'Flying Solo',
 
           largeImageKey: horizons ? 'ed_logo_h' : 'ed_logo',
           largeImageText: horizons ? 'Elite Dangerous: Horizons' : 'Elite Dangerous',
