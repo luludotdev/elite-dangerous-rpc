@@ -6,8 +6,14 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron . --debug",
-    "build": "electron-packager ./ ED-RPC --arch x64 --platform win32 --asar --out .release --app-version 1.0.0 --overwrite",
+    "pack": "cross-env ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true electron-builder --dir",
+    "dist": "cross-env ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true electron-builder",
     "test": "eslint --color src/"
+  },
+  "build": {
+    "appId": "com.jackbaron.ed-rpc",
+    "productName": "Elite Dangerous RPC",
+    "copyright": "Copyright © 2018 ${author}"
   },
   "repository": {
     "type": "git",
@@ -20,13 +26,14 @@
   },
   "homepage": "https://gitlab.com/lolPants/elite-dangerous-rich-presence#readme",
   "devDependencies": {
-    "electron-packager": "^12.2.0",
+    "cross-env": "^5.2.0",
+    "electron": "^3.0.5",
+    "electron-builder": "^20.28.4",
     "eslint": "^5.7.0"
   },
   "dependencies": {
     "chokidar": "^2.0.4",
     "discord-rpc": "^3.0.1",
-    "electron": "^3.0.5",
     "electron-is-dev": "^1.0.1",
     "uuid": "^3.3.2"
   }
