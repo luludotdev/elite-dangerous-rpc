@@ -1,35 +1,33 @@
 {
   "name": "elite-dangerous-rich-presence",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
   "description": "Discord RPC for Elite Dangerous",
-  "main": "src/index.js",
+  "main": "src/main.js",
   "scripts": {
+    "start": "electron .",
+    "dev": "electron . --debug",
+    "build": "electron-packager ./ ED-RPC --arch x64 --platform win32 --asar --out .release --app-version 1.0.0 --overwrite",
     "test": "eslint --color src/"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/lolPants/elite-dangerous-rich-presence.git"
   },
-  "keywords": [
-    "discord",
-    "rich",
-    "presence",
-    "elite",
-    "dangerous"
-  ],
-  "author": "Jack Baron <me@jackbaron.com> (https://www.jackbaron.com)",
+  "author": "Jack Baron <jackmbaron@gmail.com> (https://www.jackbaron.com)",
   "license": "ISC",
   "bugs": {
     "url": "https://gitlab.com/lolPants/elite-dangerous-rich-presence/issues"
   },
-  "homepage": "https://gitlab.com/lolPants/elite-dangerous-rich-presence#README",
+  "homepage": "https://gitlab.com/lolPants/elite-dangerous-rich-presence#readme",
   "devDependencies": {
+    "electron-packager": "^12.2.0",
     "eslint": "^5.7.0"
   },
   "dependencies": {
     "chokidar": "^2.0.4",
     "discord-rpc": "^3.0.1",
+    "electron": "^3.0.5",
+    "electron-is-dev": "^1.0.1",
     "uuid": "^3.3.2"
   }
 }

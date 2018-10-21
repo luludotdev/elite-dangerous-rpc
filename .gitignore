@@ -34,3 +34,6 @@ node_modules
 
 # VSCode
 .vscode
+
+# Electron Builds
+.release/
