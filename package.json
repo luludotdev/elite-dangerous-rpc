@@ -1,6 +1,6 @@
 {
   "name": "elite-dangerous-rpc",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Discord RPC for Elite Dangerous",
   "main": "src/main.js",
   "scripts": {
@@ -8,6 +8,7 @@
     "dev": "electron . --debug",
     "pack": "cross-env ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true electron-builder --dir",
     "dist": "cross-env ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true electron-builder --win",
+    "ship": "cross-env ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true electron-builder --win -p always",
     "test": "eslint --color src/"
   },
   "build": {
@@ -19,8 +20,8 @@
       "allowToChangeInstallationDirectory": true
     },
     "win": {
-      "target": [ "nsis" ],
-      "publish": [ "github" ]
+      "target": ["nsis"],
+      "publish": ["github"]
     }
   },
   "repository": {

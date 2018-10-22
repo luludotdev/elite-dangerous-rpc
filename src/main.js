@@ -35,7 +35,7 @@ app.on('ready', async () => {
     return app.quit()
   }
 
-  win.setTitle('Elite Dangerous Rich Presence')
+  win.setTitle(`Elite Dangerous Rich Presence // v${require('../package.json').version}`)
   win.loadURL(format({
     protocol: 'file',
     slashes: true,
