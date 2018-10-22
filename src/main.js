@@ -1,6 +1,7 @@
 const { format } = require('url')
 const { join } = require('path')
 const { BrowserWindow, Menu, app, dialog } = require('electron')
+const { autoUpdater } = require('electron-updater')
 const isDev = require('electron-is-dev')
 const { Client } = require('discord-rpc')
 const { Watcher } = require('./main/watcher.js')
@@ -17,6 +18,8 @@ const setRPC = details => {
 }
 
 app.on('ready', async () => {
+  if (!isDev) autoUpdater.checkForUpdatesAndNotify()
+
   const win = new BrowserWindow({
     width: 500,
     height: isDev ? 370 : 350,

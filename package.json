@@ -1,5 +1,5 @@
 {
-  "name": "elite-dangerous-rich-presence",
+  "name": "elite-dangerous-rpc",
   "version": "1.1.0",
   "description": "Discord RPC for Elite Dangerous",
   "main": "src/main.js",
@@ -13,18 +13,26 @@
   "build": {
     "appId": "com.jackbaron.ed-rpc",
     "productName": "Elite Dangerous RPC",
-    "copyright": "Copyright © 2018 ${author}"
+    "copyright": "Copyright © 2018 ${author}",
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "win": {
+      "target": [ "nsis" ],
+      "publish": [ "github" ]
+    }
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/lolPants/elite-dangerous-rich-presence.git"
+    "url": "git+https://github.com/lolPants/elite-dangerous-rpc.git"
   },
   "author": "Jack Baron <jackmbaron@gmail.com> (https://www.jackbaron.com)",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/lolPants/elite-dangerous-rich-presence/issues"
+    "url": "https://github.com/lolPants/elite-dangerous-rpc/issues"
   },
-  "homepage": "https://gitlab.com/lolPants/elite-dangerous-rich-presence#readme",
+  "homepage": "https://github.com/lolPants/elite-dangerous-rpc/issues#readme",
   "devDependencies": {
     "cross-env": "^5.2.0",
     "electron": "^3.0.5",
@@ -35,6 +43,7 @@
     "chokidar": "^2.0.4",
     "discord-rpc": "^3.0.1",
     "electron-is-dev": "^1.0.1",
+    "electron-updater": "^3.1.2",
     "uuid": "^3.3.2"
   }
 }
