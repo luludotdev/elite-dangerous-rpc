@@ -7,6 +7,10 @@ const { Client } = require('discord-rpc')
 const { Watcher } = require('./main/watcher.js')
 const { CLIENT_ID: clientId } = require('./main/constants.js')
 
+/**
+ * @type {BrowserWindow}
+ */
+let win
 const rpc = new Client({ transport: 'ipc' })
 
 let rpcReady = false
@@ -18,9 +22,9 @@ const setRPC = details => {
 }
 
 app.on('ready', async () => {
-  if (!isDev) autoUpdater.checkForUpdatesAndNotify()
+  if (!isDev) autoUpdater.checkForUpdates()
 
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 500,
     height: isDev ? 370 : 350,
     resizable: false,
@@ -69,4 +73,19 @@ app.on('window-all-closed', () => {
 
 app.on('before-quit', async () => {
   if (rpcReady) await rpc.destroy()
+})
+
+autoUpdater.on('download-progress', percent => {
+  win.setProgressBar(percent.percent, { mode: 'normal' })
+})
+
+autoUpdater.on('update-downloaded', () => {
+  dialog.showMessageBox({
+    type: 'info',
+    buttons: [],
+    title: 'Updater',
+    message: 'A newer version has been downloaded.\n\nClick OK to install the update.\nThe program will restart with the update applied.',
+  })
+
+  autoUpdater.quitAndInstall(true, true)
 })
