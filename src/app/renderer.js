@@ -11,6 +11,8 @@ const systemDOM = document.getElementById('system')
 const stateDOM = document.getElementById('state')
 
 ipcRenderer.on('details', (_, details) => {
+  console.log(details) // eslint-disable-line
+
   const logo = getLogo(details.largeImageKey === 'ed_logo_h')
   const system = details.details
 

@@ -3,8 +3,8 @@ const { join } = require('path')
 const { BrowserWindow, Menu, app, dialog } = require('electron')
 const isDev = require('electron-is-dev')
 const { Client } = require('discord-rpc')
-const { Watcher } = require('./watcher.js')
-const { CLIENT_ID: clientId } = require('./constants.js')
+const { Watcher } = require('./main/watcher.js')
+const { CLIENT_ID: clientId } = require('./main/constants.js')
 
 const rpc = new Client({ transport: 'ipc' })
 
@@ -18,7 +18,7 @@ const setRPC = details => {
 
 app.on('ready', async () => {
   const win = new BrowserWindow({
-    width: 480,
+    width: 500,
     height: isDev ? 370 : 350,
     resizable: false,
     maximizable: false,

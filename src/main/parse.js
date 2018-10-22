@@ -1,4 +1,5 @@
 const { fixCamelCase } = require('./helpers.js')
+const { ships } = require('./constants.js')
 
 /**
  * @typedef {Object} SystemJump
@@ -14,7 +15,7 @@ const { fixCamelCase } = require('./helpers.js')
  * @param {any[]} data Journal Data
  * @returns {SystemJump}
  */
-const getCurrentSystem = data => {
+const currentSystem = data => {
   const jumps = data.filter(x => x.event === 'StartJump' && x.JumpType === 'Hyperspace')
   const lastJump = [...jumps].pop()
 
@@ -26,7 +27,7 @@ const getCurrentSystem = data => {
  * @param {any[]} data Journal Data
  * @returns {number|boolean}
  */
-const getWingStatus = data => {
+const wingStatus = data => {
   const wingData = [...data]
     .filter(x => ['WingJoin', 'WingAdd', 'WingLeave'].includes(x.event))
     .reverse()
@@ -59,7 +60,7 @@ const getWingStatus = data => {
  * @param {any[]} data Journal Data
  * @returns {DockedEvent|boolean}
  */
-const getDockedStatus = data => {
+const dockedStatus = data => {
   const [current] = [...data]
     .filter(x => ['Docked', 'Undocked'].includes(x.event))
     .reverse()
@@ -76,7 +77,7 @@ const getDockedStatus = data => {
  * @param {any[]} data Journal Data
  * @returns {boolean}
  */
-const getHorizons = data => {
+const hasHorizons = data => {
   const [loadGame] = [...data]
     .filter(x => ['LoadGame'].includes(x.event))
     .reverse()
@@ -89,7 +90,7 @@ const getHorizons = data => {
  * @param {any[]} data Journal Data
  * @returns {('flying'|'touchdown'|'srv'|'fighter')}
  */
-const getTouchdownStatus = data => {
+const touchdownStatus = data => {
   const events = ['Docked', 'Undocked', 'Touchdown', 'Liftoff', 'LaunchSRV', 'DockSRV', 'LaunchFighter', 'DockFighter']
 
   const [latest] = [...data]
@@ -109,4 +110,36 @@ const getTouchdownStatus = data => {
   return 'flying'
 }
 
-module.exports = { getCurrentSystem, getWingStatus, getDockedStatus, getHorizons, getTouchdownStatus }
+/**
+ * Gets the current Ship
+ * @param {any[]} data Journal Data
+ * @returns {string}
+ */
+const currentShip = data => {
+  const events = ['Loadout', 'DockFighter']
+
+  const found = [...data]
+    .filter(x => events.includes(x.event))
+    .filter(x => x.PlayerControlled === undefined ? true : x.PlayerControlled === true)
+    .reverse()
+
+  const fighters = ships.filter(x => x.fighter === true)
+  const [loadout] = found[0].event !== 'DockFighter' ?
+    found.filter(x => x.event === 'Loadout') :
+    found.filter(x => x.event === 'Loadout')
+      .filter(ship => !fighters.map(x => x.id).includes(ship.Ship.toLowerCase()))
+
+  const ship = ships.find(x => x.id === loadout.Ship.toLowerCase())
+  if (ship === undefined) return 'Flying Solo'
+
+  return ship.name
+}
+
+module.exports = {
+  currentSystem,
+  wingStatus,
+  dockedStatus,
+  hasHorizons,
+  touchdownStatus,
+  currentShip,
+}
