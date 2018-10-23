@@ -16,10 +16,14 @@ const { ships } = require('./constants.js')
  * @returns {SystemJump}
  */
 const currentSystem = data => {
-  const jumps = data.filter(x => x.event === 'StartJump' && x.JumpType === 'Hyperspace')
-  const lastJump = [...jumps].pop()
+  const events = [...data]
+    .filter(x => x.event === 'StartJump' ? x.JumpType === 'Hyperspace' : x.event === 'FSDJump')
+    .reverse()
 
-  return lastJump
+  const starts = events.filter(x => x.event === 'StartJump')
+  const [latest] = events
+
+  return latest.event === 'StartJump' ? starts[1] : starts[0]
 }
 
 /**
