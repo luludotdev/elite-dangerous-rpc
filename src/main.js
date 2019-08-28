@@ -30,6 +30,10 @@ app.on('ready', async () => {
     resizable: false,
     maximizable: false,
     show: false,
+
+    webPreferences: {
+      nodeIntegration: true,
+    },
   })
 
   try {
