@@ -43,7 +43,7 @@
   "homepage": "https://github.com/lolPants/elite-dangerous-rpc/issues#readme",
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "electron": "^7.2.4",
+    "electron": "^18.3.7",
     "electron-builder": "^21.2.0",
     "eslint": "^6.2.2"
   },
